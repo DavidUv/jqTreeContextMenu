@@ -2,16 +2,16 @@
 	position: absolute;
 	width: 120px;
 	z-index: 99999;
-	border: solid 1px #CCC;
-	background: #EEE;
-	padding: 0px;
+	border: solid 1px #000;
+	background: #fff;
+	padding: 5px;
 	margin: 0px;
 	display: none;
 }
 
 .contextMenu li {
 	list-style: none;
-	padding: 0px;
+	padding: 2px;
 	margin: 0px;
 }
 
