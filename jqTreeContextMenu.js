@@ -68,14 +68,6 @@
 				$menuEl.hide();
 			});
 
-			// Highlight menu items on hover
-			$menuEl.find('a').mouseover(function () {
-				$menuEl.find('li.hover').removeClass('hover');
-				$(this).parent().addClass('hover');
-			}).mouseout(function () {
-				$menuEl.find('li.hover').removeClass('hover');
-			});
-
 			// Make selection follow the node that was right clicked on.
 			var selectedNode = $el.tree('getSelectedNode');
 			if (selectedNode !== event.node) {
