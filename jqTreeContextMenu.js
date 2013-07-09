@@ -57,15 +57,19 @@
 
 			$menuEl.offset({ left: x, top: y });
 
-			// Make it possible to dismiss context menu by clicking somewhere in the document.
-			$(document).bind('click', function () {
-				$(document).unbind('click');
+			var dismissContextMenu = function () {
+				$(document).unbind('click.jqtreecontextmenu');
+				$el.unbind('tree.click.jqtreecontextmenu');
 				$menuEl.hide();
+			}
+			// Make it possible to dismiss context menu by clicking somewhere in the document.
+			$(document).bind('click.jqtreecontextmenu', function () {
+				dismissContextMenu();
 			});
 
 			// Dismiss context menu if another node in the tree is clicked.
-			$el.bind('tree.click', function (e) {
-				$menuEl.hide();
+			$el.bind('tree.click.jqtreecontextmenu', function (e) {
+				dismissContextMenu();
 			});
 
 			// Make selection follow the node that was right clicked on.
@@ -80,8 +84,8 @@
 				menuItems.unbind('click');
 				menuItems.click(function (e) {
 					e.stopImmediatePropagation();
-					$menuEl.hide();
-					var hrefAnchor = e.target.attributes.href.nodeValue;
+					dismissContextMenu();
+					var hrefAnchor = e.currentTarget.attributes.href.nodeValue;
 					var funcKey = hrefAnchor.slice(hrefAnchor.indexOf("#") + 1, hrefAnchor.length)
 					var callbackFn = callbacks[funcKey];
 					if (callbackFn) {
