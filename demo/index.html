@@ -41,15 +41,15 @@
 
             var $tree = $('#tree1');
             $tree.tree({
-                data: data,
-                autoOpen: true,
-				usecontextmenu: true
+              data: data,
+              autoOpen: true,
+              usecontextmenu: true
             });
 
             $tree.jqTreeContextMenu($('#myMenu'), {
-                "edit": function (node) { alert('Edit node: ' + node.name); },
-                "delete": function (node) { alert('Delete node: ' + node.name); },
-				"add": function (node) { alert('Add node: ' + node.name); }
+              "edit": function (node) { alert('Edit node: ' + node.name); },
+              "delete": function (node) { alert('Delete node: ' + node.name); },
+              "add": function (node) { alert('Add node: ' + node.name); }
             });
         });
     </script>
