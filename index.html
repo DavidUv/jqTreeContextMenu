@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Javascript tree with autoscroll</title>
+    <link rel="stylesheet" href="js/jqTree-0.16.0/jqtree.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="js/jqTree-0.16.0/tree.jquery.js"></script>
+    <script src="jqTreeContextMenu.js"></script>
+</head>
+<body class="container">
+	<h1>Example</h1>
+    <p class="lead">This is an example of a context menu for jqTree. </p>
+
+    <div>
+        <div id="tree1">
+        </div>
+    </div>
+
+	<div class="dropdown">
+	<ul id="myMenu" class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+		<li class="edit"><a href="#edit"><i class="icon-edit"></i> Edit</a></li>
+		<li class="delete"><a href="#delete"><i class="icon-remove"></i> Delete</a></li>
+		<li class="divider"></li>
+		<li class="add"><a href="#add"><i class="icon-plus"></i> Add</a></li>
+	</ul>
+	</div>
+	
+    <script>
+        $(function () {
+            var data = [{
+                label: 'node1',
+                children: [{ label: 'child1' },
+                           { label: 'child2' }]
+            },{
+                 label: 'node2',
+                 children: [{ label: 'child3'}]
+            }];
+
+            var $tree = $('#tree1');
+            $tree.tree({
+              data: data,
+              autoOpen: true,
+              usecontextmenu: true
+            });
+
+            $tree.jqTreeContextMenu($('#myMenu'), {
+              "edit": function (node) { alert('Edit node: ' + node.name); },
+              "delete": function (node) { alert('Delete node: ' + node.name); },
+              "add": function (node) { alert('Add node: ' + node.name); }
+            });
+        });
+    </script>
+</body>
+</html>
