@@ -3,6 +3,8 @@ jqTreeContextMenu
 
 A context menu "plugin" to jqTree.
 
+Demo: http://daviduv.github.io/jqTreeContextMenu/
+
 Usage:
 
 Create a div that contains the menu. See the demo for an example how to
