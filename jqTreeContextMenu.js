@@ -31,8 +31,23 @@
 
 		// Handle the contextmenu event sent from jqTree when user clicks right mouse button.
 		$el.bind('tree.contextmenu', function (event) {
-			var x = event.click_event.clientX;
-			var y = event.click_event.clientY;
+			var x = event.click_event.pageX;
+			var y = event.click_event.pageY;
+			var yPadding = 5;
+			var xPadding = 5;
+			var menuHeight = $menuEl.height();
+			var menuWidth = $menuEl.width();
+			var windowHeight = $(window).height();
+			var windowWidth = $(window).width();
+			
+			if (menuHeight + y + yPadding > windowHeight) {
+				// Make sure the whole menu is rendered within the viewport. 
+				y = y - menuHeight;
+			}
+			if (menuWidth + x + xPadding > windowWidth) {
+				// Make sure the whole menu is rendered within the viewport. 
+				x = x - menuWidth;
+			}
 
 			// Handle disabling and enabling of menu items on specific nodes.
 			if (Object.keys(nodeToDisabledMenuItems).length > 0) {
