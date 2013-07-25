@@ -2,13 +2,7 @@
 	if (!$.fn.tree) {
 		throw "Error jqTree is not loaded.";
 	}
-	
-	// The jQuery object of the menu div.
-	$menuEl = null;
-	
-	// This hash holds all menu items that should be disabled for a specific node.
-	nodeToDisabledMenuItems = {};
-	
+
 	$.fn.jqTreeContextMenu = function (menuElement, callbacks) {
 		//
 		// TODO:
@@ -18,7 +12,11 @@
 		var self = this;
 		var $el = this;
 
-		$menuEl = menuElement;
+		// The jQuery object of the menu div.
+		var $menuEl = menuElement;
+		
+		// This hash holds all menu items that should be disabled for a specific node.
+		var nodeToDisabledMenuItems = {};
 		
 		// Hide the menu div.
 		$menuEl.hide();
@@ -56,11 +54,17 @@
 					var items = nodeToDisabledMenuItems[nodeName];
 					if (items.length === 0) {
 						$menuEl.find('li').addClass('disabled');
+						$menuEl.find('li > a').unbind('click');
 					} else {
-						for (var i = 0; i < items.length; i++) {
-							$menuEl.find('li.' + items[i]).addClass('disabled');	
-							$menuEl.find('li.' + items[i] + ' a').unbind('click');
-						}	
+						$menuEl.find('li > a').each(function () {
+							$(this).closest('li').removeClass('disabled');
+							var hrefValue = $(this).attr('href');
+							var value = hrefValue.slice(hrefValue.indexOf("#") + 1, hrefValue.length)
+							if ($.inArray(value, items) > -1) {
+								$(this).closest('li').addClass('disabled');
+								$(this).unbind('click');
+							}
+						});	
 					}
 				} else {
 					$menuEl.find('li.disabled').removeClass('disabled');
@@ -110,56 +114,82 @@
 				});
 			}
 		});
-	};
-	
-	$.fn.jqTreeContextMenu.disable = function () {
-		if (arguments.length === 0) {
-			// Called as: jqTreeContextMenu.disable()
-			$menuEl.find('li:not(.disabled)').addClass('disabled');
-			$menuEl.find('li a').unbind('click');
-			nodeToDisabledMenuItems = {};
-		} else if (arguments.length === 1) {
-			// Called as: jqTreeContextMenu.disable(['edit','remove'])
-			var items = arguments[0];
-			if (typeof items !== 'object') {
-				return;
+		
+		this.disable = function () {
+			if (arguments.length === 0) {
+				// Called as: api.disable()
+				$menuEl.find('li:not(.disabled)').addClass('disabled');
+				$menuEl.find('li a').unbind('click');
+				nodeToDisabledMenuItems = {};
+			} else if (arguments.length === 1) {
+				// Called as: api.disable(['edit','remove'])
+				var items = arguments[0];
+				if (typeof items !== 'object') {
+					return;
+				}
+				$menuEl.find('li > a').each(function () {
+					var hrefValue = $(this).attr('href');
+					var value = hrefValue.slice(hrefValue.indexOf("#") + 1, hrefValue.length)
+					if ($.inArray(value, items) > -1) {
+						$(this).closest('li').addClass('disabled');
+						$(this).unbind('click');
+					}
+				});
+				nodeToDisabledMenuItems = {};
+			} else if (arguments.length === 2) {
+				// Called as: api.disable(nodeName, ['edit','remove'])
+				var nodeName = arguments[0];
+				var items = arguments[1];
+				nodeToDisabledMenuItems[nodeName] = items;
 			}
-			for (var i = 0; i < items.length; i++) {
-				$menuEl.find('li.' + items[i]).addClass('disabled');
-				$menuEl.find('li.' + items[i] + ' a').unbind('click');
-			}
-			nodeToDisabledMenuItems = {};
-		} else if (arguments.length === 2) {
-			// Called as: jqTreeContextMenu.disable(nodeName, ['edit','remove'])
-			var nodeName = arguments[0];
-			var items = arguments[1];
-			nodeToDisabledMenuItems[nodeName] = items;
-		}
-	};
+		};
 
-	$.fn.jqTreeContextMenu.enable = function () {
-		if (arguments.length === 0) {
-			// Called as: jqTreeContextMenu.enable()
-			$menuEl.find('li.disabled').removeClass('disabled');
-			nodeToDisabledMenuItems = {};
-		} else if (arguments.length === 1) {
-			// Called as: jqTreeContextMenu.enable(['edit','remove'])
-			var items = arguments[0];
-			if (typeof items !== 'object') {
-				return;
-			}
-			for (var i = 0; i < items.length; i++) {
-				$menuEl.find('li.' + items[i]).removeClass('disabled');
-			}
-			nodeToDisabledMenuItems = {};
-		} else if (arguments.length === 2) {
-			// Called as: jqTreeContextMenu.enable(nodeName, ['edit','remove'])
-			var nodeName = arguments[0];
-			var items = arguments[1];
-			delete nodeToDisabledMenuItems[nodeName];
-			if (Object.keys(nodeToDisabledMenuItems).length === 0) {
+		this.enable = function () {
+			if (arguments.length === 0) {
+				// Called as: api.enable()
 				$menuEl.find('li.disabled').removeClass('disabled');
+				nodeToDisabledMenuItems = {};
+			} else if (arguments.length === 1) {
+				// Called as: api.enable(['edit','remove'])
+				var items = arguments[0];
+				if (typeof items !== 'object') {
+					return;
+				}
+				
+				$menuEl.find('li > a').each(function () {
+					var hrefValue = $(this).attr('href');
+					var value = hrefValue.slice(hrefValue.indexOf("#") + 1, hrefValue.length)
+					if ($.inArray(value, items) > -1) {
+						$(this).closest('li').removeClass('disabled');
+					}
+				});
+
+				nodeToDisabledMenuItems = {};
+			} else if (arguments.length === 2) {
+				// Called as: api.enable(nodeName, ['edit','remove'])
+				var nodeName = arguments[0];
+				var items = arguments[1];
+				if (items.length === 0) {
+					delete nodeToDisabledMenuItems[nodeName];
+				} else {
+					var disabledItems = nodeToDisabledMenuItems[nodeName];
+					for (var i = 0; i < items.length; i++) {
+						var idx = disabledItems.indexOf(items[i]);
+						if (idx > -1) {
+							disabledItems.splice(idx, 1);
+						}
+					}
+					if (disabledItems.length === 0) {
+						delete nodeToDisabledMenuItems[nodeName];
+					} else {
+						nodeToDisabledMenuItems[nodeName] = disabledItems;	
+					}
+				}
+				if (Object.keys(nodeToDisabledMenuItems).length === 0) {
+					$menuEl.find('li.disabled').removeClass('disabled');
+				}
 			}
-		}
+		};
+		return this;
 	};
 } (jQuery));
