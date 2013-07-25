@@ -33,7 +33,7 @@ $tree.jqTreeContextMenu(menu, callbacks);
 
 *Example*
 ```JavaScript
-$tree.jqTreeContextMenu($('#myMenu'), {
+$('tree').jqTreeContextMenu($('#myMenu'), {
     "edit": function (node) { alert('Edit node: ' + node.name); },
     "delete": function (node) { alert('Delete node: ' + node.name); },
     "add": function (node) { alert('Add node: ' + node.name); }
@@ -44,21 +44,24 @@ $tree.jqTreeContextMenu($('#myMenu'), {
 
 There is also a minimal API to enable/disable menu items.
 ```JavaScript
+// Get handle to API when initializing the menu.
+var menuAPI = $('tree').jqTreeContextMenu(...);
+
 // Disable all menu items
-jqTreeContextMenu.disable()
+menuAPI.jqTreeContextMenu.disable()
 // Disable all menu items of a certain kind. Here 'add' and 'delete'
 // menu items are deleted.
-jqTreeContextMenu.disable(['add', 'delete'])
+menuAPI.jqTreeContextMenu.disable(['add', 'delete'])
 // Disable menu items for a certain node in the tree.
-jqTreeContextMenu.disable(nodeName, ['add', 'delete'])
+menuAPI.jqTreeContextMenu.disable(nodeName, ['add', 'delete'])
 
 // Enable all menu items
-jqTreeContextMenu.enable()
+menuAPI.jqTreeContextMenu.enable()
 // Enable all menu items of a certain kind. Here 'add' and 'delete'
 // menu items are deleted.
-jqTreeContextMenu.enable(['add', 'delete'])
+menuAPI.jqTreeContextMenu.enable(['add', 'delete'])
 // Enable menu items for a certain node in the tree.
-jqTreeContextMenu.enable(nodeName, ['add', 'delete'])
+menuAPI.jqTreeContextMenu.enable(nodeName, ['add', 'delete'])
 ```
 
 For a complete example of usage, see the demo at http://daviduv.github.io/jqTreeContextMenu/.
