@@ -9,6 +9,18 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="js/jqTree-0.16.0/tree.jquery.js"></script>
     <script src="../jqTreeContextMenu.js"></script>
+
+	<style type="text/css">
+	.myMenuStyle {
+		position: absolute;
+		background-color: #eee;
+		border: 1px solid #000;
+		list-style: none;
+	}
+	.myMenuStyle > li {
+		background-color: #eee;
+	}
+	</style>
 </head>
 <body class="container">
 	<h1>Example</h1>
@@ -16,23 +28,23 @@
 
     <div>
 		<div style="float: left;">
-			<h2>Tree 1</h2>
+			<h4>Tree styled with Twitter Bootstrap menu</h2>
         	<div id="tree1"></div>
 		</div>
 		<div style="float: right;">
-			<h2>Tree 2</h2>
+			<h4>Tree with non-styled menu</h2>
 			<div id="tree2"></div>
         </div>
     </div>
 
 	<ul id="myMenu" class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-		<li class="edit"><a href="#edit"><i class="icon-edit"></i> Edit</a></li>
-		<li class="delete"><a href="#delete"><i class="icon-remove"></i> Delete</a></li>
+		<li><a href="#edit"><i class="icon-edit"></i> Edit</a></li>
+		<li><a href="#delete"><i class="icon-remove"></i> Delete</a></li>
 		<li class="divider"></li>
-		<li class="add"><a href="#add"><i class="icon-plus"></i> Add</a></li>
+		<li><a href="#add"><i class="icon-plus"></i> Add</a></li>
 	</ul>
 	
-	<ul id="myMenu2">
+	<ul id="myMenu2" class="myMenuStyle">
 		<li><a href="#edit"> Edit</a></li>
 		<li><a href="#delete"> Delete</a></li>
 		<li><a href="#add"> Add</a></li>
@@ -219,14 +231,14 @@
             },
 ];
 
-            var $tree = $('#tree1');
-            $tree.tree({
+            var $tree1 = $('#tree1');
+            $tree1.tree({
               data: data,
               autoOpen: true,
               usecontextmenu: true
             });
 
-            $tree.jqTreeContextMenu($('#myMenu'), {
+            api = $tree1.jqTreeContextMenu($('#myMenu'), {
               "edit": function (node) { alert('Edit node: ' + node.name); },
               "delete": function (node) { alert('Delete node: ' + node.name); },
               "add": function (node) { alert('Add node: ' + node.name); }
@@ -239,7 +251,7 @@
               usecontextmenu: true
             });
 
-            $tree2.jqTreeContextMenu($('#myMenu2'), {
+            api2 = $tree2.jqTreeContextMenu($('#myMenu2'), {
               "edit": function (node) { alert('Edit node: ' + node.name); },
               "delete": function (node) { alert('Delete node: ' + node.name); },
               "add": function (node) { alert('Add node: ' + node.name); }
