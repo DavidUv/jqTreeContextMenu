@@ -1,263 +1,78 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>Javascript tree with autoscroll</title>
-    <link rel="stylesheet" href="js/jqTree-0.16.0/jqtree.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+     <meta charset="utf-8">
+     <title>Javascript tree with autoscroll</title>
+     <link rel="stylesheet" href="css/jqtree.css">
+     <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="js/jqTree-0.16.0/tree.jquery.js"></script>
-    <script src="../jqTreeContextMenu.js"></script>
+     <script src="js/jquery-3.5.1.min.js"></script>
+     <script src="js/tree.jquery-1.5.1.js"></script>
+     <script src="../jqTreeContextMenu.js"></script>
 
-	<style type="text/css">
-	.myMenuStyle {
-		position: absolute;
-		background-color: #eee;
-		border: 1px solid #000;
-		list-style: none;
-	}
-	.myMenuStyle > li {
-		background-color: #eee;
-	}
-	</style>
+     <style type="text/css">
+          .myMenuStyle {
+               position: absolute;
+               background-color: #eee;
+               border: 1px solid #000;
+               list-style: none;
+          }
+
+          .myMenuStyle>li {
+               background-color: #eee;
+          }
+     </style>
 </head>
+
 <body class="container">
 	<h1>Example</h1>
     <p class="lead">This is an example of a context menu for jqTree. </p>
 
     <div>
-		<div style="float: left;">
-			<h4>Tree styled with Twitter Bootstrap menu</h2>
-        	<div id="tree1"></div>
-		</div>
-		<div style="float: right;">
-			<h4>Tree with non-styled menu</h2>
-			<div id="tree2"></div>
+        <div id="tree1">
         </div>
     </div>
 
-	<ul id="myMenu" class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-		<li><a href="#edit"><i class="icon-edit"></i> Edit</a></li>
-		<li><a href="#delete"><i class="icon-remove"></i> Delete</a></li>
+	<ul id="myMenu1" class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+		<li class="edit"><a href="#edit"><i class="icon-edit"></i> Edit</a></li>
+		<li class="delete"><a href="#delete"><i class="icon-remove"></i> Delete</a></li>
 		<li class="divider"></li>
-		<li><a href="#add"><i class="icon-plus"></i> Add</a></li>
+		<li class="add"><a href="#add"><i class="icon-plus"></i> Add</a></li>
 	</ul>
-	
-	<ul id="myMenu2" class="myMenuStyle">
-		<li><a href="#edit"> Edit</a></li>
-		<li><a href="#delete"> Delete</a></li>
-		<li><a href="#add"> Add</a></li>
+
+	<ul id="myMenu2" class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+		<li class="edit"><a href="#edit"><i class="icon-edit"></i> Edit</a></li>
+		<li class="delete"><a href="#delete"><i class="icon-remove"></i> Delete</a></li>
 	</ul>
 	
     <script>
         $(function () {
-            var data = [
-			{
+            var data = [{
                 label: 'node1',
                 children: [{ label: 'child1' },
                            { label: 'child2' }]
             },{
                  label: 'node2',
                  children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-			{
-                label: 'node1',
-                children: [{ label: 'child1' },
-                           { label: 'child2' }]
-            },{
-                 label: 'node2',
-                 children: [{ label: 'child3'}]
-            },
-];
+            }];
 
-            var $tree1 = $('#tree1');
-            $tree1.tree({
+            var $tree = $('#tree1');
+            $tree.tree({
               data: data,
               autoOpen: true,
               usecontextmenu: true
             });
-
-            api = $tree1.jqTreeContextMenu($('#myMenu'), {
+			
+            $('#tree1').jqTreeContextMenu((node) => {
+                 return node.name.startsWith('node') ? $('#myMenu1') : $('#myMenu2');
+            }, {
               "edit": function (node) { alert('Edit node: ' + node.name); },
               "delete": function (node) { alert('Delete node: ' + node.name); },
               "add": function (node) { alert('Add node: ' + node.name); }
             });
-
-            var $tree2 = $('#tree2');
-            $tree2.tree({
-              data: data,
-              autoOpen: true,
-              usecontextmenu: true
-            });
-
-            api2 = $tree2.jqTreeContextMenu($('#myMenu2'), {
-              "edit": function (node) { alert('Edit node: ' + node.name); },
-              "delete": function (node) { alert('Delete node: ' + node.name); },
-              "add": function (node) { alert('Add node: ' + node.name); }
-            });
-
         });
     </script>
 </body>
+
 </html>
