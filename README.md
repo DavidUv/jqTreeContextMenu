@@ -18,7 +18,7 @@ this (or look in the demo).
 When the tree is created you can do the following to set up the context
 menu:
 ```JavaScript
-$tree.jqTreeContextMenu(menu, callbacks);
+$tree.jqTreeContextMenu(menuCallback, callbacks);
 ```
 *menu* is the jQuery object of the menu div.
 *callbacks* is a hash structure with following format:
@@ -33,7 +33,9 @@ $tree.jqTreeContextMenu(menu, callbacks);
 
 *Example*
 ```JavaScript
-$('tree').jqTreeContextMenu($('#myMenu'), {
+$('tree').jqTreeContextMenu((node) => {
+    return node.name.startsWith('node') ? $('#myMenu1') : $('#myMenu2');
+}, {
     "edit": function (node) { alert('Edit node: ' + node.name); },
     "delete": function (node) { alert('Delete node: ' + node.name); },
     "add": function (node) { alert('Add node: ' + node.name); }
