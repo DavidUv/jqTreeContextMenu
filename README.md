@@ -52,7 +52,7 @@ var menuAPI = $('tree').jqTreeContextMenu(...);
 // Disable all menu items
 menuAPI.jqTreeContextMenu.disable()
 // Disable all menu items of a certain kind. Here 'add' and 'delete'
-// menu items are deleted.
+// menu items are disabled.
 menuAPI.jqTreeContextMenu.disable(['add', 'delete'])
 // Disable menu items for a certain node in the tree.
 menuAPI.jqTreeContextMenu.disable(nodeName, ['add', 'delete'])
@@ -60,7 +60,7 @@ menuAPI.jqTreeContextMenu.disable(nodeName, ['add', 'delete'])
 // Enable all menu items
 menuAPI.jqTreeContextMenu.enable()
 // Enable all menu items of a certain kind. Here 'add' and 'delete'
-// menu items are deleted.
+// menu items are enabled.
 menuAPI.jqTreeContextMenu.enable(['add', 'delete'])
 // Enable menu items for a certain node in the tree.
 menuAPI.jqTreeContextMenu.enable(nodeName, ['add', 'delete'])
